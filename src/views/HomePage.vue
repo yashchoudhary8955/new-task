@@ -6,7 +6,7 @@
         <input
           type="text"
           v-model="searchQuery"
-          placeholder="Search by title"
+          placeholder="Search by user name"
           class="form-control mb-3"
         />
         <PostList :posts="filteredPosts" :users="users"/>
@@ -32,9 +32,13 @@ export default {
   computed: {
     ...mapState(['posts', 'users']),
     filteredPosts() {
-      return this.posts.filter(post =>
-        post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+      if (!this.searchQuery) {
+        return this.posts;
+      }
+      return this.posts.filter(post => {
+        const user = this.users.find(user => user.id === post.userId);
+        return user && user.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+      });
     }
   },
   created() {

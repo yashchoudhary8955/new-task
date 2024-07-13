@@ -2,7 +2,7 @@
   <div>
     
     <div>
-      <label v-for="user in users" :key="user.id">
+      <label v-for="user in users" :key="user.name">
         <input type="checkbox" :value="user.name" v-model="selectedNames" />
         {{ user.name }}
       </label>
